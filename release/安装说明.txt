@@ -1,0 +1,16 @@
+Cupbox · Android QQ 机器人 0.1.0
+
+安装文件：Cupbox-Android-Qbot-0.1.0-release.apk
+系统要求：Android 8.0 及以上
+
+将 APK 复制到手机，允许文件管理器安装应用后打开安装。
+
+重要：本应用不内置 QQ 扫码登录。需要连接另一台设备上已登录 QQ 的 OneBot v11 协议端（如 NapCat），并配置兼容 Chat Completions 的模型 API。
+
+使用顺序：连接页填写协议端和模型 → 规则页填写群白名单 → 保存 → 概览连接 → 手动开启回复。
+
+默认白名单为空、私聊关闭，不会擅自发言。
+按骁龙 480 级别设备做了轻量化设计，但尚未完成该芯片真机验收。
+完整配置、构建与限制请看上一层 README.md 和 docs/VALIDATION.md。
+
+请维护者备份上一层 .keys/cupbox-release.jks 和 signing.properties，用于今后签名升级；不要向其他人分发这两份签名文件。

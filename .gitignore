@@ -1,0 +1,11 @@
+.gradle/
+.tools/
+**/build/
+local.properties
+*.jks
+*.keystore
+signing.properties
+output/
+.keys/
+release/*.apk
+release/*.sha256
