@@ -1,0 +1,114 @@
+[
+  {
+    "abi": "arm64-v8a",
+    "file": "libproot.so",
+    "package": "proot-aarch64.deb",
+    "sha256": "bc3e5416748276374c513eaad1c6cabedc94246fdf2dd58fa6531374e481fa09",
+    "packageSha256": "a28355e9be257e1f87f4e9294b3118470d4fd7a5442fed8b278f4443c83407d7"
+  },
+  {
+    "abi": "arm64-v8a",
+    "file": "libloader.so",
+    "package": "proot-aarch64.deb",
+    "sha256": "1da54355333cca3fb6ee10e3b82a24df24fb230c99241ce83809bf9e240609b5",
+    "packageSha256": "a28355e9be257e1f87f4e9294b3118470d4fd7a5442fed8b278f4443c83407d7"
+  },
+  {
+    "abi": "arm64-v8a",
+    "file": "libbusybox.so",
+    "package": "busybox-aarch64.deb",
+    "sha256": "db7f2a847ab051086c71d1c8c367e71adf59a3c39c8323ff801126ff11c84058",
+    "packageSha256": "1bb7f1d4c00cadd0e1117b6dd7110311b8bf749ef00b486e96cfdc11c98f8fd9"
+  },
+  {
+    "abi": "arm64-v8a",
+    "file": "libbusybox-core.so",
+    "package": "busybox-aarch64.deb",
+    "sha256": "b8153ac191754afcd6dd1896f961c7ecf3965cafd727a2690f648fdd9ba57cc1",
+    "packageSha256": "1bb7f1d4c00cadd0e1117b6dd7110311b8bf749ef00b486e96cfdc11c98f8fd9"
+  },
+  {
+    "abi": "arm64-v8a",
+    "file": "libtalloc.so",
+    "package": "talloc-aarch64.deb",
+    "sha256": "742b438c4d09e276985a61d44164c9de207b6d8cc268f3018cb3001961bcb309",
+    "packageSha256": "556591f43bb773ad8777e1a29522640866a55f95dab71914418b94a8c58ad5a7"
+  },
+  {
+    "abi": "arm64-v8a",
+    "file": "libandroid-shmem.so",
+    "package": "shmem-aarch64.deb",
+    "sha256": "84475798e07c8174dbbfaec70a827fdb02f19ffa69a589380c13e7507fd0e731",
+    "packageSha256": "0da3a24d558b93c92bcf8d611e0826a99ff96e396b148e6cdf33b47c47c57ff6"
+  },
+  {
+    "abi": "arm64-v8a",
+    "file": "libandroid-selinux.so",
+    "package": "selinux-aarch64.deb",
+    "sha256": "d769bc3757df751e4c302cdb55062a33cda2041ba0483d953d93100cd321a810",
+    "packageSha256": "00afd8c34087c2864737b51fd9d104dc5e955f6ec3c0f50c0c7ef5b4a56866b9"
+  },
+  {
+    "abi": "arm64-v8a",
+    "file": "libpcre2-8.so",
+    "package": "pcre2-aarch64.deb",
+    "sha256": "52c7ab426f4f274f630d05ef04c852153f4bb7e78ae178ce61cb17e258569bdf",
+    "packageSha256": "c27995e5f52b8ecc9b8b3e662eb08e49f82a18bfd3f34343936acc7b23964724"
+  },
+  {
+    "abi": "x86_64",
+    "file": "libproot.so",
+    "package": "proot-x86_64.deb",
+    "sha256": "9561fec6cfb4dd2c07dc0b41dec880361897e626147b183fb1d1092fb95ad35e",
+    "packageSha256": "85adb8d0d2e1edc6c56e60c17136adf05e54ce75f69407ec7116a4c5997eaed5"
+  },
+  {
+    "abi": "x86_64",
+    "file": "libloader.so",
+    "package": "proot-x86_64.deb",
+    "sha256": "a836b0569c84b1661333d16bacf6b396ff08fea816a5c936a82e08ddeeca8341",
+    "packageSha256": "85adb8d0d2e1edc6c56e60c17136adf05e54ce75f69407ec7116a4c5997eaed5"
+  },
+  {
+    "abi": "x86_64",
+    "file": "libbusybox.so",
+    "package": "busybox-x86_64.deb",
+    "sha256": "f948cf54e9fd8d66c4467e705395878272b9489852e0aa7c590fadf0ff4be100",
+    "packageSha256": "519b57623dd076b4d6cf6d389ed976dd222410e3a0b9b9b58c14d8535b6eef48"
+  },
+  {
+    "abi": "x86_64",
+    "file": "libbusybox-core.so",
+    "package": "busybox-x86_64.deb",
+    "sha256": "99539017f82c40a3832591759c3c77e5b7aff0085d5f50d538b5c9421b7e1863",
+    "packageSha256": "519b57623dd076b4d6cf6d389ed976dd222410e3a0b9b9b58c14d8535b6eef48"
+  },
+  {
+    "abi": "x86_64",
+    "file": "libtalloc.so",
+    "package": "talloc-x86_64.deb",
+    "sha256": "7fa6722a4320495b1b85832fc7fd02de0cb367b45f116c1921b2830a6936da90",
+    "packageSha256": "b8c6d95f20075dc1f9ec6573575b2444e8d526e48e0d8d6d5cf4e071e6e06530"
+  },
+  {
+    "abi": "x86_64",
+    "file": "libandroid-shmem.so",
+    "package": "shmem-x86_64.deb",
+    "sha256": "092926060298acd3778e6239033d7aef1280dcb59aebe021a3719612e6a3465f",
+    "packageSha256": "ffa9e4c87467b158b148d0ff92dda796aa038276c2075af3269cdcdb06f25797"
+  },
+  {
+    "abi": "x86_64",
+    "file": "libandroid-selinux.so",
+    "package": "selinux-x86_64.deb",
+    "sha256": "8e6ccc535d823e66005f0716e6e3bd5beb543042e0c509492e89cf9239c29b3e",
+    "packageSha256": "99cf96556683ddb53f7d645ca1720e10523c4796ce5b41c583da9f89a47679ce"
+  },
+  {
+    "abi": "x86_64",
+    "file": "libpcre2-8.so",
+    "package": "pcre2-x86_64.deb",
+    "sha256": "1538a936aac406631b60aed67f3e089ad4d7f7254df0d391393704398c4f9fe1",
+    "packageSha256": "4a6f66ac12565342897ce9b5cd11ba8ce6fce1fd1a91ae679c3468d7fc2ee541"
+  }
+]

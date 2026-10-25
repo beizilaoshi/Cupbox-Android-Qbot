@@ -1,14 +1,29 @@
 <resources>
-    <style name="AppTheme" parent="android:style/Theme.Material.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.Material3.Light.NoActionBar">
         <item name="android:fontFamily">sans</item>
         <item name="android:windowLightStatusBar">true</item>
-        <item name="android:colorAccent">#425e47</item>
-        <item name="android:windowActionModeOverlay">true</item>
-        <item name="android:windowBackground">#fafaf7</item>
+        <item name="colorPrimary">#46664b</item>
+        <item name="colorOnPrimary">#ffffff</item>
+        <item name="colorSurface">#f6faf3</item>
+        <item name="colorOnSurface">#192019</item>
+        <item name="colorSurfaceVariant">#e0e6da</item>
+        <item name="colorOnSurfaceVariant">#42493f</item>
+        <item name="colorSecondaryContainer">#d8e8d1</item>
+        <item name="colorOnSecondaryContainer">#172616</item>
+        <item name="colorOutline">#747c70</item>
+        <item name="android:windowBackground">#f6faf3</item>
     </style>
-    <style name="AppTheme.Dark" parent="android:style/Theme.Material.NoActionBar">
+    <style name="AppTheme.Dark" parent="Theme.Material3.Dark.NoActionBar">
         <item name="android:fontFamily">sans</item>
-        <item name="android:colorAccent">#c9d2bd</item>
-        <item name="android:windowBackground">#202120</item>
+        <item name="colorPrimary">#accfa8</item>
+        <item name="colorOnPrimary">#19371e</item>
+        <item name="colorSurface">#111610</item>
+        <item name="colorOnSurface">#e0e6da</item>
+        <item name="colorSurfaceVariant">#42493f</item>
+        <item name="colorOnSurfaceVariant">#c2c9bb</item>
+        <item name="colorSecondaryContainer">#3b4d36</item>
+        <item name="colorOnSecondaryContainer">#d8e8d1</item>
+        <item name="colorOutline">#8d9587</item>
+        <item name="android:windowBackground">#111610</item>
     </style>
 </resources>

@@ -1,0 +1,33 @@
+Cupbox Android 1.0.0
+
+Cupbox Java UI and bot code: MIT, with the original Cupbox image/brand reservations.
+Original whale persona: Copyright (c) 2026 chennianlaobai, MIT.
+The whale source, license, and attribution are in assets/whale/.
+
+Native executables and libraries are separate upstream components from official Termux packages:
+- PRoot 5.1.107.101 and its loader: GPL-2.0.
+  Source: https://github.com/termux/proot/tree/v5.1.107.101
+- BusyBox 1.38.0-1: GPL-2.0.
+  Source: https://busybox.net/downloads/busybox-1.38.0.tar.bz2
+- talloc 2.5.0: distributed by Termux under GPL-3.0.
+  Source: https://www.samba.org/ftp/talloc/talloc-2.5.0.tar.gz
+- libandroid-shmem 0.7: BSD 3-Clause.
+  Source: https://github.com/termux/libandroid-shmem/tree/v0.7
+- Android libselinux 14.0.0.11-1: upstream/Termux notices apply; see selinux-copyright.txt.
+- PCRE2 10.49: BSD 3-Clause.
+  Source: https://github.com/PCRE2Project/pcre2/releases/tag/pcre2-10.49
+
+GPL license texts and upstream package copyright notices accompany this APK.
+Complete GPL source archives accompany this project in third_party/native/sources/.
+Termux build recipes and patches: https://github.com/termux/termux-packages/tree/master/packages
+Binary and package SHA-256 hashes are recorded in docs/native-manifest.json.
+
+OkHttp/Okio, Kotlin, AndroidX, Material Components, ZXing: Apache-2.0.
+Android desugar_jdk_libs: GPLv2 with Classpath Exception.
+
+The AstrBot Android / Android DIY Sandbox / Code LFA approach was studied to design the
+local Ubuntu + Linux QQ + NapCat flow. Cupbox does not embed AstrBot's framework or UI.
+Ubuntu base images are bundled at build time. Their component licenses and source
+locations are documented in UBUNTU-BASE.txt and retained inside the Ubuntu images.
+QQ, NapCat and the Linux launcher are downloaded from their upstreams on demand.
+Their respective upstream licenses and terms apply; these components are not bundled in this APK.

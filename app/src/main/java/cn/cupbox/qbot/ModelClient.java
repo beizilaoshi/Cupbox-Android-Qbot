@@ -7,7 +7,8 @@ import org.json.*;
 public final class ModelClient {
   public static Request request(Config c, JSONArray history, String text) throws JSONException {
     JSONArray messages =
-        new JSONArray().put(new JSONObject().put("role", "system").put("content", c.prompt));
+        new JSONArray()
+            .put(new JSONObject().put("role", "system").put("content", Persona.prompt(c)));
     for (int i = 0; i < history.length(); i++) messages.put(history.get(i));
     messages.put(new JSONObject().put("role", "user").put("content", text));
     JSONObject body =
@@ -47,6 +48,7 @@ public final class ModelClient {
             .optString("content", "")
             .trim();
     value = value.replaceAll("(?s)<think>.*?</think>", "").trim();
+    value = Persona.clean(value);
     if (value.isEmpty() || value.startsWith("<think>")) throw new IOException("模型没有返回可发送的正文");
     return value.length() > 1800 ? value.substring(0, 1800) + "…" : value;
   }

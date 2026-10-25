@@ -8,6 +8,22 @@ import org.json.*;
 import org.junit.Test;
 
 public class BotCoreTest {
+  @Test
+  public void originalWhaleAndFreedomStaySeparate() throws Exception {
+    Config c = new Config();
+    c.persona = "whale";
+    c.prompt = "MY_EXTRA_PROMPT";
+    assertTrue(Persona.prompt(c).contains("白米饭"));
+    assertTrue(Persona.prompt(c).contains("大肥鱼"));
+    assertFalse(Persona.prompt(c).contains("MY_EXTRA_PROMPT"));
+    c.whaleFreedom = true;
+    assertTrue(Persona.prompt(c).contains("MY_EXTRA_PROMPT"));
+    assertEquals("你好", Persona.clean("你好\n[表情:开心]"));
+    Config saved = Config.from(c.json());
+    assertEquals("whale", saved.persona);
+    assertTrue(saved.whaleFreedom);
+  }
+
   private JSONObject event(String type, String user, String group, JSONArray parts)
       throws Exception {
     return new JSONObject()

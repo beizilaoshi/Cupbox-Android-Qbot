@@ -80,6 +80,12 @@ public final class BotService extends Service {
     if (config != null) return START_NOT_STICKY;
     try {
       config = store.load();
+      if (config.useLocal) {
+        if (RuntimeService.instance == null || !RuntimeService.loggedIn)
+          throw new IllegalStateException("请先完成本机 QQ 登录");
+        config.ws = "ws://127.0.0.1:" + RuntimeService.instance.botPort;
+        config.token = RuntimeService.instance.botToken;
+      }
       config.validate(true);
       connect();
     } catch (Exception e) {
@@ -401,5 +407,9 @@ public final class BotService extends Service {
   @Override
   public IBinder onBind(Intent intent) {
     return null;
+  }
+
+  public boolean usesLocal() {
+    return config != null && config.useLocal;
   }
 }

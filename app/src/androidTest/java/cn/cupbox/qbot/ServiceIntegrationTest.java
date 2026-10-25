@@ -115,6 +115,7 @@ public class ServiceIntegrationTest {
       onebot.start();
       model.start();
       Config c = new Config();
+      c.useLocal = false;
       c.ws = onebot.url("/").toString().replace("http:", "ws:");
       c.base = model.url("/v1").toString();
       c.model = "mock";

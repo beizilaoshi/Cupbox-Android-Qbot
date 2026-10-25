@@ -14,12 +14,17 @@ public final class Config {
       groups = "",
       keywords = "",
       scope = "白名单";
+  public String persona = "companion";
+  public boolean useLocal = true, whaleFreedom = false;
   public boolean privateReply = false, mention = true, memory = true, replyAt = false;
   public int cooldown = 5, perMinute = 10, context = 12, maxTokens = 512;
   public double temperature = 0.8;
 
   public JSONObject json() throws JSONException {
     return new JSONObject()
+        .put("useLocal", useLocal)
+        .put("persona", persona)
+        .put("whaleFreedom", whaleFreedom)
         .put("ws", ws)
         .put("token", token)
         .put("base", base)
@@ -42,6 +47,9 @@ public final class Config {
 
   public static Config from(JSONObject j) {
     Config c = new Config();
+    c.useLocal = j.optBoolean("useLocal", j.optString("ws", "").isBlank());
+    c.persona = j.optString("persona", "companion");
+    c.whaleFreedom = j.optBoolean("whaleFreedom");
     c.ws = j.optString("ws", c.ws);
     c.token = j.optString("token", "");
     c.base = j.optString("base", c.base);
@@ -73,7 +81,7 @@ public final class Config {
       for (String id : groups.trim().split("[，,\\s]+"))
         if (!id.matches("[0-9]{4,20}")) throw new IllegalArgumentException("群号只能填写数字，用逗号或换行分隔");
     checkUrl(base, Set.of("http", "https"), "模型地址");
-    if (!ws.isBlank() || connect) checkUrl(ws, Set.of("ws", "wss"), "OneBot 地址");
+    if (!useLocal && (!ws.isBlank() || connect)) checkUrl(ws, Set.of("ws", "wss"), "OneBot 地址");
     if (connect && model.isBlank()) throw new IllegalArgumentException("请先填写模型名称");
     if (prompt.length() > 8000) throw new IllegalArgumentException("人设最多 8000 字");
   }

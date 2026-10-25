@@ -1,0 +1,20 @@
+Cupbox 0.3 bundles the unmodified Ubuntu Noble base images distributed by
+Termux proot-distro v4.18.0 (aarch64 and x86_64). These images are not QQ or NapCat.
+
+Image source and build configuration:
+https://github.com/termux/proot-distro/releases/tag/v4.18.0
+https://github.com/termux/proot-distro/tree/v4.18.0
+
+Each Ubuntu package retains its copyright and licensing information in
+/usr/share/doc/<package>/copyright inside the image (installed under the app's
+files/qq-runtime/ubuntu). Ubuntu is a collection of separately licensed packages;
+it is not covered by the Cupbox application license. GPL texts are also included
+in assets/licenses. Corresponding Ubuntu source packages are available from:
+https://archive.ubuntu.com/ubuntu/pool/
+https://ports.ubuntu.com/ubuntu-ports/pool/
+https://launchpad.net/ubuntu/+source
+
+The installed image retains Ubuntu package metadata and package versions in
+/var/lib/dpkg/status. Use those versions when obtaining corresponding source.
+Reproduction and SHA-256 verification: scripts/prepare-bundles.py.
+Linux QQ and NapCat are downloaded separately under their upstream terms.

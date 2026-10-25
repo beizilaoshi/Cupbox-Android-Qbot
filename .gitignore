@@ -9,3 +9,4 @@ output/
 .keys/
 release/*.apk
 release/*.sha256
+app/src/main/assets/runtime/bundles/*.tar.xz

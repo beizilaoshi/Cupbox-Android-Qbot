@@ -3,11 +3,16 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_REMOTE_MESSAGING"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC"/>
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
-    <application android:label="Cupbox · QQ 机器人" android:icon="@mipmap/ic_launcher" android:theme="@style/AppTheme" android:allowBackup="false" android:dataExtractionRules="@xml/data_extraction_rules" android:supportsRtl="true" android:usesCleartextTraffic="true">
-        <activity android:name=".MainActivity" android:exported="true" android:windowSoftInputMode="adjustResize">
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <application android:label="Cupbox · QQ 机器人" android:icon="@mipmap/ic_launcher" android:theme="@style/AppTheme" android:allowBackup="false" android:fullBackupContent="false" android:extractNativeLibs="true" android:dataExtractionRules="@xml/data_extraction_rules" android:supportsRtl="true" android:usesCleartextTraffic="true">
+        <activity android:name=".MainActivity" android:exported="true" android:screenOrientation="portrait" android:windowSoftInputMode="adjustResize">
             <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
         </activity>
         <service android:name=".BotService" android:exported="false" android:foregroundServiceType="remoteMessaging"/>
+        <service android:name=".RuntimeService" android:exported="false" android:foregroundServiceType="dataSync|remoteMessaging"/>
+        <activity android:name=".LoginActivity" android:exported="false" android:screenOrientation="portrait"/>
+        <activity android:name=".AboutActivity" android:exported="false" android:screenOrientation="portrait"/>
     </application>
 </manifest>

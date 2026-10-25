@@ -12,11 +12,14 @@ if (-not $DebugBuild -and -not (Test-Path signing.properties)) {
     Remove-Item Env:CupboxSigningPassword
 }
 $variant=if($DebugBuild){'Debug'}else{'Release'}
+python scripts/prepare-bundles.py
+if($LASTEXITCODE -ne 0){throw '内置基础环境校验失败'}
 & .\gradlew.bat "assemble$variant" testDebugUnitTest lintDebug --console=plain
 if($LASTEXITCODE -ne 0){throw '构建或检查失败'}
 New-Item -ItemType Directory -Force release | Out-Null
 $source="app/build/outputs/apk/$($variant.ToLower())/app-$($variant.ToLower()).apk"
-$destination="release/Cupbox-Android-Qbot-0.1.0-$($variant.ToLower()).apk"
+$appVersion=(((Select-String -Path app/build.gradle -Pattern 'versionName').Line) -split "'")[1]
+$destination="release/Cupbox-Android-Qbot-$appVersion-$($variant.ToLower()).apk"
 Copy-Item -LiteralPath $source -Destination $destination -Force
 $hash=(Get-FileHash -LiteralPath $destination -Algorithm SHA256).Hash.ToLower()
 "$hash  $([IO.Path]::GetFileName($destination))" | Set-Content "$destination.sha256" -Encoding ascii

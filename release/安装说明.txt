@@ -1,16 +1,27 @@
-Cupbox · Android QQ 机器人 0.1.0
+Cupbox · Android QQ 机器人 1.0.0
 
-安装文件：Cupbox-Android-Qbot-0.1.0-release.apk
-系统要求：Android 8.0 及以上
+最新安装文件：Cupbox-Android-Qbot-1.0.0-release.apk
+Android 8.0+，64 位 ARM / x86，主界面和登录页均为竖屏。
+GitHub 发布页：https://github.com/beizilaoshi/Cupbox-Android-Qbot/releases/tag/v1.0.0
 
-将 APK 复制到手机，允许文件管理器安装应用后打开安装。
+本机登录：首页 → 第一步 · 登录 QQ → 进入本机登录 → 准备并启动本机 QQ。
+Ubuntu 基础环境已内置，首次仍需网络下载 QQ、NapCat 及系统依赖，至少预留 3 GB 空间。
+复制/下载显示真实进度；安装显示当前阶段，等待时轮播通用冷知识。支持停止、重试和复用环境。
+出现二维码后用 QQ 扫码确认，返回首页配置模型与回复范围，保存后连接机器人，再手动开启回复。
+新版首页引导三步设置，底部为首页 / 人格 / 设置；修改后出现固定保存栏。
+原 Logo 启动动画，系统关闭动画时跳过。
+人格页面可选择蓝色大肥鱼（原版鲸鱼娘），默认不叠加自定义设定，也可开启自由演绎。
+仍可关闭本机模式，使用已有远程 OneBot 协议端。
 
-重要：本应用不内置 QQ 扫码登录。需要连接另一台设备上已登录 QQ 的 OneBot v11 协议端（如 NapCat），并配置兼容 Chat Completions 的模型 API。
+新增关于页面：设置 → 关于 Cupbox · 属性与更新。
+包含版本、构建号、包名、系统与安装包属性、使用步骤、权限说明、开源许可。
+QQ 交流群：638500178，可在关于页复制群号。
+GitHub：https://github.com/beizilaoshi/Cupbox-Android-Qbot
+手动检查该仓库正式 Release，展示新版和更新说明，再前往 GitHub 下载。
+支持检查进度、取消、失败重试；无正式 Release 时会明确提示。
 
-使用顺序：连接页填写协议端和模型 → 规则页填写群白名单 → 保存 → 概览连接 → 手动开启回复。
+完整说明：上一层 README.md。
+验证记录：上一层 docs/VALIDATION.md。
+已验证真实二维码获取，未登录真实账号；账号登录与真实收发需本人确认。
 
-默认白名单为空、私聊关闭，不会擅自发言。
-按骁龙 480 级别设备做了轻量化设计，但尚未完成该芯片真机验收。
-完整配置、构建与限制请看上一层 README.md 和 docs/VALIDATION.md。
-
-请维护者备份上一层 .keys/cupbox-release.jks 和 signing.properties，用于今后签名升级；不要向其他人分发这两份签名文件。
+维护者请备份 .keys/cupbox-release.jks 与 signing.properties，不要向其他人分发签名文件。
