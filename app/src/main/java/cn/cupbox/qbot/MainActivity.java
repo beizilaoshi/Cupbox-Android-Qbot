@@ -552,14 +552,25 @@ public final class MainActivity extends AppCompatActivity {
   }
 
   private void showLogs() {
+    List<String> list = BotService.logs();
+    String value =
+        list.isEmpty() ? "还没有运行记录，连接机器人后会显示在这里。" : String.join("\n\n", list);
     new MaterialAlertDialogBuilder(this)
         .setTitle("运行记录")
-        .setMessage(
-            BotService.logs().isEmpty()
-                ? "还没有运行记录，连接机器人后会显示在这里。"
-                : String.join("\n\n", BotService.logs()))
+        .setMessage(value)
+        .setNeutralButton("复制记录", (d, w) -> copy("Cupbox 运行记录", value))
         .setPositiveButton("关闭", null)
         .show();
+  }
+
+  private void copy(String label, String value) {
+    try {
+      getSystemService(android.content.ClipboardManager.class)
+          .setPrimaryClip(android.content.ClipData.newPlainText(label, value));
+      toast("已复制");
+    } catch (Exception e) {
+      toast("复制失败");
+    }
   }
 
   private void backLink() {
@@ -592,10 +603,12 @@ public final class MainActivity extends AppCompatActivity {
         .get("useLocal")
         .setOnCheckedChangeListener(
             (v, on) -> {
+              if (rendering) return;
               capture();
               config.useLocal = on;
               dirty = true;
-              render();
+              // 不能在开关自己的回调里重建视图，否则正在回调的控件会被销毁。
+              handler.post(this::render);
             });
     if (!config.useLocal) {
       field(remote, "WebSocket 地址", "ws", config.ws, false, false)
@@ -735,7 +748,7 @@ public final class MainActivity extends AppCompatActivity {
             capture();
             config.persona = modes[p];
             dirty = true;
-            render();
+            handler.post(this::render);
           });
       choice.setContentDescription(names[i] + (selected ? "，已选择" : "，未选择"));
       add(presets, choice, 8);
@@ -771,10 +784,11 @@ public final class MainActivity extends AppCompatActivity {
           .get("whaleFreedom")
           .setOnCheckedChangeListener(
               (v, on) -> {
+                if (rendering) return;
                 capture();
                 config.whaleFreedom = on;
                 dirty = true;
-                render();
+                handler.post(this::render);
               });
     field(c, "温度（0–2）", "temperature", "" + config.temperature, false, false);
     field(c, "每次输出 token 上限（64–2048）", "maxTokens", "" + config.maxTokens, false, false);
@@ -786,7 +800,7 @@ public final class MainActivity extends AppCompatActivity {
     backLink();
     heading("", "会话记忆", "只记录成功投递的对话，不保存旁听消息。");
     LinearLayout c = card("对话记忆");
-    note(c, store.summary());
+    note(c, memorySummary());
     toggle(c, "使用并保存会话记忆", "按机器人 QQ + 群 / 私聊分别隔离；关闭后不读取，也不新增。", "memory", config.memory);
     field(c, "每次参考历史条数（0–20）", "context", "" + config.context, false, false);
     note(c, "最多保存 32 个会话，每会话最近 20 条。记忆保存在应用私有数据库，为本机明文；开启后相关历史随请求提交给模型。卸载会删除。");
@@ -846,6 +860,14 @@ public final class MainActivity extends AppCompatActivity {
                     .setPositiveButton("知道了", null)
                     .show()),
         14);
+  }
+
+  private String memorySummary() {
+    try {
+      return store.summary();
+    } catch (Exception e) {
+      return "暂时无法读取本地记忆";
+    }
   }
 
   private String memoryDetail() {
@@ -958,7 +980,7 @@ public final class MainActivity extends AppCompatActivity {
       startForegroundService(new Intent(this, BotService.class));
       handler.postDelayed(this::render, 250);
     } catch (Exception e) {
-      error(e.getMessage());
+      error(e.getMessage() == null ? "启动失败，请检查设置与网络" : e.getMessage());
     }
   }
 
@@ -1133,6 +1155,7 @@ public final class MainActivity extends AppCompatActivity {
   }
 
   @Override
+  @SuppressWarnings("deprecation")
   public void onBackPressed() {
     if (page != 0) {
       go(0);

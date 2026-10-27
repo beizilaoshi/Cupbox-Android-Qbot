@@ -16,6 +16,8 @@ public final class Store extends SQLiteOpenHelper {
   public Store(Context c) {
     super(c, "cupbox.db", null, 1);
     app = c.getApplicationContext();
+    // 主线程读、工作线程写：开启 WAL，避免读写互相阻塞。
+    setWriteAheadLoggingEnabled(true);
   }
 
   public void onCreate(SQLiteDatabase db) {
@@ -76,6 +78,7 @@ public final class Store extends SQLiteOpenHelper {
 
   public synchronized JSONArray history(String session, int limit) throws JSONException {
     JSONArray reverse = new JSONArray(), result = new JSONArray();
+    limit = Math.max(0, Math.min(20, limit));
     if (limit == 0) return result;
     try (Cursor c =
         getReadableDatabase()

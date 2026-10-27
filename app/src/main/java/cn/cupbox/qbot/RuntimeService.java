@@ -82,6 +82,8 @@ public final class RuntimeService extends Service {
     showNotification(false);
     if (started) return START_NOT_STICKY;
     started = true;
+    // 重试时不要继续显示上一次的失败原因。
+    error = "";
     worker.execute(
         () -> {
           try {
@@ -104,7 +106,8 @@ public final class RuntimeService extends Service {
             runtime.install();
             if (stopped) return;
             state = "正在启动本机 QQ";
-            progress = new RuntimeProgress(state, 0, -1);
+            // 安装阶段的百分比只描述文件传输；进入启动阶段后不再沿用旧进度。
+            progress = new RuntimeProgress("等待 QQ 生成二维码", 0, -1);
             main.post(() -> showNotification(true));
             polling.scheduleWithFixedDelay(this::poll, 2, 2, TimeUnit.SECONDS);
             runtime.start(botToken, webToken, botPort, webPort);
@@ -266,6 +269,7 @@ public final class RuntimeService extends Service {
     qr = "";
     account = "";
     instance = null;
+    progress = new RuntimeProgress("等待开始", 0, -1);
     if (error.isEmpty()) state = "本机 QQ 已停止";
     stopLocalBot();
     main.removeCallbacksAndMessages(null);

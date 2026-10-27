@@ -242,9 +242,26 @@ public final class BotService extends Service {
         boolean success = j.optInt("retcode", -1) == 0 && j.optString("status").equals("ok");
         if (success) {
           sent++;
-          if (config.memory)
-            store.remember(pendingMessage.conversation(), pendingMessage.text(), pendingAnswer);
-          log("回复投递成功 · " + pendingAnswer.length() + " 字");
+          Rules.Message delivered = pendingMessage;
+          String answer = pendingAnswer;
+          // 会话记忆写入放到工作线程，避免主线程做数据库 I/O。
+          if (config.memory && delivered != null && answer != null) {
+            final String conversation = delivered.conversation();
+            final String question = delivered.text();
+            try {
+              worker.execute(
+                  () -> {
+                    try {
+                      store.remember(conversation, question, answer);
+                    } catch (Exception e) {
+                      log("记忆写入失败，本次对话未保存");
+                    }
+                  });
+            } catch (java.util.concurrent.RejectedExecutionException ignored) {
+              log("机器人正在停止，本次对话未写入记忆");
+            }
+          }
+          log("回复投递成功 · " + (answer == null ? 0 : answer.length()) + " 字");
         } else log("QQ 拒绝发送，未记录为成功");
         clearPending();
         busy = false;
@@ -252,12 +269,13 @@ public final class BotService extends Service {
       }
       Rules.Message m = Rules.parse(j);
       if (m == null || !online || !m.account().equals(account) || !Rules.allowed(config, m)) return;
-      received++;
       String id = m.account() + ":" + m.id();
       if (m.id().isBlank() || seen.containsKey(id)) return;
       seen.put(id, true);
       trim(seen, 512);
+      // 只有真正命中规则、且不是重复投递的消息才计入「已触发」；暂停与忙碌期间不计数。
       if (!reply || busy) return;
+      received++;
       long now = SystemClock.elapsedRealtime();
       Long last = cooldown.get(m.conversation());
       if (last != null && now - last < config.cooldown * 1000L) return;
@@ -304,14 +322,25 @@ public final class BotService extends Service {
             deliver(m, answer);
           });
     } catch (Exception e) {
+      String reason = reason(e);
       main.post(
           () -> {
             if (epoch == current) {
               busy = false;
-              log("模型请求失败，请检查模型、网络及额度；未向 QQ 发送错误内容");
+              log("模型请求失败（" + reason + "）；未向 QQ 发送错误内容");
             }
           });
     }
+  }
+
+  /** Short, non-leaking failure reason: our own messages are Chinese, anything else stays generic. */
+  private static String reason(Exception e) {
+    String message = e == null ? null : e.getMessage();
+    if (message == null) return "网络或服务异常";
+    String value = message.replaceAll("\\s+", " ").trim();
+    if (value.isEmpty()) return "网络或服务异常";
+    if (!value.matches("(?s).*[\\u4e00-\\u9fff].*")) return "网络或服务异常";
+    return value.length() > 80 ? value.substring(0, 80) + "…" : value;
   }
 
   private void deliver(Rules.Message m, String answer) {

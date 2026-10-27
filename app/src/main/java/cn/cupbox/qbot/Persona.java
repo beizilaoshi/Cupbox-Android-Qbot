@@ -34,7 +34,15 @@ public final class Persona {
   }
 
   public static String clean(String value) {
-    return value.replaceAll("\\[表情\\s*[:：][^\\]\\r\\n]*\\]", "").trim();
+    if (value == null) return "";
+    String text =
+        value
+            .replaceAll("\\[表情\\s*[:：][^\\]\\r\\n]*\\]", "")
+            .replace("\r\n", "\n")
+            .replace('\r', '\n')
+            .replaceAll("[ \t]+\n", "\n")
+            .replaceAll("\n{3,}", "\n\n");
+    return text.trim();
   }
 
   private Persona() {}

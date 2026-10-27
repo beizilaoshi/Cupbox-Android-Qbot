@@ -77,8 +77,10 @@ public final class Config {
 
   public void validate(boolean connect) {
     if (!Set.of("白名单", "黑名单", "所有群").contains(scope)) throw new IllegalArgumentException("群聊范围无效");
+    if (groups.length() > 4000) throw new IllegalArgumentException("群号列表过长，请精简后再保存");
+    if (keywords.length() > 2000) throw new IllegalArgumentException("触发关键词最多 2000 字");
     if (!groups.trim().isEmpty())
-      for (String id : groups.trim().split("[，,\\s]+"))
+      for (String id : Rules.split(groups))
         if (!id.matches("[0-9]{4,20}")) throw new IllegalArgumentException("群号只能填写数字，用逗号或换行分隔");
     checkUrl(base, Set.of("http", "https"), "模型地址");
     if (!useLocal && (!ws.isBlank() || connect)) checkUrl(ws, Set.of("ws", "wss"), "OneBot 地址");
@@ -100,7 +102,7 @@ public final class Config {
   }
 
   public boolean groupAllowed(String group) {
-    Set<String> ids = new HashSet<>(Arrays.asList(groups.trim().split("[，,\\s]+")));
+    Set<String> ids = new HashSet<>(Arrays.asList(Rules.split(groups)));
     return scope.equals("所有群")
         || (scope.equals("白名单") ? ids.contains(group) : !ids.contains(group));
   }

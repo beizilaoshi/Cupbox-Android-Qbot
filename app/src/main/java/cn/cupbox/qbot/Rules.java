@@ -51,14 +51,24 @@ public final class Rules {
         j.optString("message_id"));
   }
 
+  /** One separator set for every list the user can type: commas, 、；and whitespace. */
+  private static final java.util.regex.Pattern SEPARATOR =
+      java.util.regex.Pattern.compile("[，,、;；\\s]+");
+
+  public static String[] split(String value) {
+    return SEPARATOR.split(value == null ? "" : value.trim());
+  }
+
   public static boolean allowed(Config c, Message m) {
     if (m == null) return false;
     if (m.group().isEmpty()) return c.privateReply;
     if (!c.groupAllowed(m.group())) return false;
     if (c.mention && m.at()) return true;
     String t = m.text().toLowerCase(Locale.ROOT);
-    for (String kw : c.keywords.split("[，,\\n]+"))
-      if (!kw.isBlank() && t.contains(kw.trim().toLowerCase(Locale.ROOT))) return true;
+    for (String kw : split(c.keywords)) {
+      String needle = kw.trim().toLowerCase(Locale.ROOT);
+      if (!needle.isEmpty() && t.contains(needle)) return true;
+    }
     return false;
   }
 }

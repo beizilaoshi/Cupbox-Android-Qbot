@@ -164,10 +164,13 @@ public final class AboutActivity extends AppCompatActivity {
     hero.addView(text("把陪伴，装进口袋。", 14, muted));
     add(body, hero, 8);
     updates();
-    LinearLayout changes = card("1.0.0 · 这次的新变化");
-    note(changes, "全新的关于页面，将版本、应用属性、联系方式与开源说明放在一起。");
-    note(changes, "新增手动检查更新：读取指定 GitHub 仓库的正式 Release，展示版本差异与更新说明，再由你决定是否前往下载。");
-    note(changes, "保留三步设置引导、原 Logo 启动动画、真实下载进度、离线冷知识和内置大肥鱼人设。");
+    LinearLayout changes = card(AppInfo.version(this) + " · 这次的新变化");
+    note(changes, "修复：推理模型输出未闭合的思考段时，思考内容会被当成正文发到 QQ。");
+    note(changes, "修复：暂停或忙碌期间被丢弃的消息也被计入「已触发」，统计偏高。");
+    note(changes, "修复：回复成功后在主线程写会话记忆，长时间使用可能出现卡顿。");
+    note(changes, "修复：切换人格、登录方式时重建界面，存在控件被销毁的闪退风险。");
+    note(changes, "优化：群号与关键词支持「、」「；」和空格分隔，并增加长度上限提示。");
+    note(changes, "优化：记忆数据库开启 WAL；运行记录支持一键复制；二维码等待阶段不再显示旧进度。");
     properties();
     LinearLayout capabilities = card("一只口袋里的 QQ 搭子");
     note(capabilities, "本机登录 · 内置 Ubuntu 基础环境与运行工具，自动配置端口和协议；准备完成后扫码确认。也可以连接已有的远程 OneBot。");

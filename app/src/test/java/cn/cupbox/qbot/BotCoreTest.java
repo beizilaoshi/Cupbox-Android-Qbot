@@ -132,6 +132,48 @@ public class BotCoreTest {
   }
 
   @Test
+  public void separatorsPersonaCleanupAndInputLimits() throws Exception {
+    Config c = new Config();
+    c.scope = "黑名单";
+    c.groups = "88888、99999；77777";
+    c.keywords = "你好；在吗";
+    assertFalse(Rules.allowed(c, Rules.parse(event("group", "54321", "88888", text("你好")))));
+    assertTrue(Rules.allowed(c, Rules.parse(event("group", "54321", "66666", text("在吗")))));
+    assertEquals("", Persona.clean("[表情:开心]"));
+    assertEquals("第一行\n\n第二行", Persona.clean("第一行\n\n\n第二行"));
+    Config tooLong = new Config();
+    tooLong.keywords = "x".repeat(2001);
+    assertThrows(IllegalArgumentException.class, () -> tooLong.validate(false));
+  }
+
+  @Test
+  public void thinkingBlocksNeverReachTheChat() throws Exception {
+    try (MockWebServer server = new MockWebServer()) {
+      server.enqueue(
+          new MockResponse()
+              .setBody("{\"choices\":[{\"message\":{\"content\":\"<think>分析</think>在的\"}}]}"));
+      server.enqueue(
+          new MockResponse()
+              .setBody("{\"choices\":[{\"message\":{\"content\":\"<think>只有思考\"}}]}"));
+      server.enqueue(new MockResponse().setBody("{\"choices\":[]}"));
+      server.start();
+      Config c = new Config();
+      c.base = server.url("/v1").toString();
+      c.model = "test";
+      OkHttpClient http = new OkHttpClient();
+      try (Response r = http.newCall(ModelClient.request(c, new JSONArray(), "在吗")).execute()) {
+        assertEquals("在的", ModelClient.answer(r));
+      }
+      try (Response r = http.newCall(ModelClient.request(c, new JSONArray(), "在吗")).execute()) {
+        assertThrows(java.io.IOException.class, () -> ModelClient.answer(r));
+      }
+      try (Response r = http.newCall(ModelClient.request(c, new JSONArray(), "在吗")).execute()) {
+        assertThrows(java.io.IOException.class, () -> ModelClient.answer(r));
+      }
+    }
+  }
+
+  @Test
   public void modelWireFormatAndAnswer() throws Exception {
     try (MockWebServer server = new MockWebServer()) {
       server.enqueue(

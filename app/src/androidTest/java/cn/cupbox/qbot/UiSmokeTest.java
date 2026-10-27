@@ -119,11 +119,11 @@ public class UiSmokeTest {
             assertEquals(
                 android.content.pm.ActivityInfo.SCREEN_ORIENTATION_PORTRAIT,
                 a.getRequestedOrientation());
-            assertEquals("1.0.0", AppInfo.version(a));
-            assertEquals(4, AppInfo.code(a));
+            assertEquals("1.0.1", AppInfo.version(a));
+            assertEquals(5, AppInfo.code(a));
             for (String label :
                 new String[] {
-                  "关于 Cupbox", "版本与更新", "应用属性", "1.0.0", "638500178", "检查更新", "开源、素材与致谢"
+                  "关于 Cupbox", "版本与更新", "应用属性", "1.0.1", "638500178", "检查更新", "开源、素材与致谢"
                 }) assertNotNull(label, find(a.getWindow().getDecorView(), label));
             click(find(a.getWindow().getDecorView(), "复制 QQ 群号"));
             assertEquals(

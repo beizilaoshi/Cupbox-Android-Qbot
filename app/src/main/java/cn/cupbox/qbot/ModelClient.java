@@ -41,15 +41,18 @@ public final class ModelClient {
       out.write(b, 0, n);
     }
     JSONObject root = new JSONObject(out.toString("UTF-8"));
-    String value =
-        root.getJSONArray("choices")
-            .getJSONObject(0)
-            .getJSONObject("message")
-            .optString("content", "")
-            .trim();
-    value = value.replaceAll("(?s)<think>.*?</think>", "").trim();
+    JSONArray choices = root.optJSONArray("choices");
+    if (choices == null || choices.length() == 0) throw new IOException("模型没有返回任何回复");
+    JSONObject first = choices.optJSONObject(0);
+    JSONObject message = first == null ? null : first.optJSONObject("message");
+    if (message == null) throw new IOException("模型响应缺少 message 字段");
+    String value = message.optString("content", "").trim();
+    // 推理模型可能输出未闭合的思考段，或把思考段放在正文前面。
+    value = value.replaceAll("(?s)<think>.*?</think>", "");
+    value = value.replaceAll("(?s)<think>.*$", "");
+    value = value.replaceAll("(?s)^.*?</think>", "");
     value = Persona.clean(value);
-    if (value.isEmpty() || value.startsWith("<think>")) throw new IOException("模型没有返回可发送的正文");
+    if (value.isEmpty()) throw new IOException("模型只返回了表情或思考内容，没有可发送的正文");
     return value.length() > 1800 ? value.substring(0, 1800) + "…" : value;
   }
 }
