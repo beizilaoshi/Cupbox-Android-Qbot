@@ -4,9 +4,11 @@
 
 ## 安装
 
-最新签名包：[1.0.0 Release](https://github.com/beizilaoshi/Cupbox-Android-Qbot/releases/tag/v1.0.0)，文件名 `Cupbox-Android-Qbot-1.0.0-release.apk`，约 130 MiB（内置两种架构的 Ubuntu 基础环境）。支持 Android 8.0 及以上的 **64 位 ARM / x86** 设备；已在 Android 12 模拟器验证。
+最新签名包：[1.0.1 Release](https://github.com/beizilaoshi/Cupbox-Android-Qbot/releases/tag/v1.0.1)，文件名 `Cupbox-Android-Qbot-1.0.1-release.apk`，129.5 MiB（内置两种架构的 Ubuntu 基础环境）。支持 Android 8.0 及以上的 **64 位 ARM / x86** 设备。
 
-将 APK 复制到手机，允许文件管理器安装应用后打开安装。沿用 0.1.0 的发布签名，可以覆盖安装原签名版本。不要将调试版与发布版混装。
+将 APK 复制到手机，允许文件管理器安装应用后打开安装。不要将调试版与发布版混装。
+
+**签名变更（1.0.1 起）**：1.0.0 的发布密钥已不可用，1.0.1 使用新的发布密钥（证书 SHA-256 `C0:3E:71:F8:9F:47:97:64:D6:16:F1:46:60:B7:01:47:9B:93:B5:31:42:54:A3:FC:9C:D8:4A:B2:2F:8A:60:53`）。Android 不允许签名不同的包互相覆盖，因此 **1.0.0 用户需要先卸载再安装**，卸载会删除应用内的配置、会话记忆与 QQ 登录资料。从 1.0.1 起请保管好 `.keys/cupbox-release.jks` 与 `signing.properties`，后续版本可正常覆盖升级。每个安装包的 SHA-256 与 APK 一起发布。
 
 ## 1.0.1 修复与优化
 
@@ -22,7 +24,7 @@
 - 优化：运行记录支持一键复制，便于反馈问题。
 - 构建：CI 显式安装 `build-tools;35.0.0`（AGP 8.7.3 默认要求），并增加并发取消、超时和产物缺失即失败。
 
-`versionCode` 从 4 升到 5，可直接覆盖安装 1.0.0。
+`versionCode` 从 4 升到 5。**注意：本版本换了新的发布签名，1.0.0 需要先卸载再安装**，详见下方「安装」一节。
 
 ## 关于、应用属性与更新
 
